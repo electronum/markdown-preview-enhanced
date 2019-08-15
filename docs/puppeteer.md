@@ -41,3 +41,20 @@ export_on_save:
     }
 }
 ```
+
+## Useful notes
+### 
+Add page break `<!-- pagebreack -->
+
+### Enable colors
+
+### Overlap in headline code
+
+### Table overflow
+
+
+## Known issues
+* Emojis are grayscale
+    * https://bugs.chromium.org/p/chromium/issues/detail?id=617403&can=1&q=print%20emoji&colspec=ID%20Pri%20M%20Stars%20ReleaseBlock%20Component%20Status%20Owner%20Summary%20OS%20Modified
+    * https://github.com/GoogleChrome/puppeteer/issues/4252
+* Empty page after?
