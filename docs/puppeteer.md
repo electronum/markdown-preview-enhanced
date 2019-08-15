@@ -44,7 +44,7 @@ export_on_save:
 
 ## Useful notes
 ### 
-Add page break `<!-- pagebreack -->
+Add page break `<!-- pagebreack -->`
 
 ### Enable colors
 
