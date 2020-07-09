@@ -11,7 +11,8 @@
 <p align="center">
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/"> English &nbsp;&nbsp; </a>
 <a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/"> 简体中文 &nbsp;&nbsp; </a>
-<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a> <br>
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/"> 正體中文 &nbsp;&nbsp; </a>
+<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/"> 日本語 &nbsp;&nbsp; </a> <br>
 </p>
 
 <p align="center">
@@ -20,11 +21,11 @@
 <a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">vscode</a>
 </p>
 
-_Still Beta Version!_
+If you are interested, please also try out our new prototype web app: [0xGG/crossnote](https://github.com/0xGG/crossnote)
 
 ## Supporting this project
 
-Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](https://shd101wyy.github.io/markdown-preview-enhanced/#/backers). You can help make this project better by [supporting us on Patreon](https://www.patreon.com/shd101wyy), [PayPal](https://shd101wyy.github.io/markdown-preview-enhanced/#/paypal), or [微信支付 Wechat Pay](https://shd101wyy.github.io/markdown-preview-enhanced/#/wechat). Thank you!
+Markdown Preview Enhanced is an open source project released under the [University of Illinois/NCSA Open Source License](LICENSE.md). Its ongoing development is made possible thanks to the support by these awesome [backers](https://shd101wyy.github.io/markdown-preview-enhanced/#/backers). You can help make this project better by [supporting us on GitHub Sponsors](https://github.com/sponsors/shd101wyy), [PayPal](https://shd101wyy.github.io/markdown-preview-enhanced/#/paypal), or [微信支付 Wechat Pay](https://shd101wyy.github.io/markdown-preview-enhanced/#/wechat). Thank you!
 
 ## Introduction
 
@@ -41,6 +42,7 @@ To check out the documentation, visit
 - [English](https://shd101wyy.github.io/markdown-preview-enhanced/#/)
 - [简体中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-cn/)
 - [正體中文](https://shd101wyy.github.io/markdown-preview-enhanced/#/zh-tw/)
+- [日本語](https://shd101wyy.github.io/markdown-preview-enhanced/#/ja-jp/)
 
 Contact me if you are willing to help translate the documentation :)
 

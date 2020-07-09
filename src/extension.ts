@@ -1,10 +1,9 @@
+import * as fs from "fs";
 import * as mume from "@shd101wyy/mume";
 import { CompositeDisposable, TextBuffer, TextEditor } from "atom";
 import * as path from "path";
 import { MarkdownPreviewEnhancedConfig } from "./config";
 import { MarkdownPreviewEnhancedView } from "./preview-content-provider";
-
-const utility = mume.utility;
 
 let subscriptions: CompositeDisposable = null;
 let config: MarkdownPreviewEnhancedConfig = null;
@@ -131,16 +130,16 @@ function startPreview(editor) {
 }
 
 export function activate(state) {
+  subscriptions = new CompositeDisposable();
+
+  // Init config
+  config = new MarkdownPreviewEnhancedConfig();
+  config.onDidChange(subscriptions, onDidChangeConfig);
+  mume.onDidChangeConfigFile(onDidChangeConfig);
+
   mume
-    .init() // init mume package
+    .init((config.configPath || "").trim()) // init mume package
     .then(() => {
-      subscriptions = new CompositeDisposable();
-
-      // Init config
-      config = new MarkdownPreviewEnhancedConfig();
-      config.onDidChange(subscriptions, onDidChangeConfig);
-      mume.onDidChangeConfigFile(onDidChangeConfig);
-
       // Set opener
       subscriptions.add(
         atom.workspace.addOpener((uri) => {
@@ -320,12 +319,46 @@ export function activate(state) {
         "../../package.json",
       ))["version"];
       if (packageVersion !== mume.configs.config["atom_mpe_version"]) {
-        mume.utility.updateExtensionConfig({
+        const mpeConfig = Object.assign({}, mume.configs.config, {
           atom_mpe_version: packageVersion,
         });
-
-        // Don't open `welcome.md` file anymore.
-        // atom.workspace.open(path.resolve(__dirname, '../../docs/welcome.md'))
+        fs.writeFileSync(
+          path.resolve(mume.getExtensionConfigPath(), "config.json"),
+          JSON.stringify(mpeConfig),
+        );
+        if (!mume.configs.config["atom_mpe_version"]) {
+          const noty = atom.notifications.addInfo(
+            "If you like using markdown-preview-enhanced, please consider sponsoring the developer to help make this project better 😊.",
+            {
+              dismissable: true,
+              buttons: [
+                {
+                  text: "Open GitHub Sponsors",
+                  onDidClick: () => {
+                    mume.utility.openFile(
+                      "https://github.com/sponsors/shd101wyy",
+                    );
+                    noty.dismiss();
+                  },
+                },
+                {
+                  text: "I already sponsored",
+                  onDidClick: () => {
+                    mpeConfig["already_sponsored"] = true;
+                    fs.writeFileSync(
+                      path.resolve(
+                        mume.getExtensionConfigPath(),
+                        "config.json",
+                      ),
+                      JSON.stringify(mpeConfig),
+                    );
+                    noty.dismiss();
+                  },
+                },
+              ],
+            },
+          );
+        }
       }
     });
 }
@@ -399,7 +432,7 @@ function bindMarkdownEditorDropEvents(editor) {
  */
 function customizeCSS() {
   const globalStyleLessFile = path.resolve(
-    utility.extensionConfigDirectoryPath,
+    mume.getExtensionConfigPath(),
     "./style.less",
   );
   atom.workspace.open(globalStyleLessFile);
@@ -471,7 +504,7 @@ function startImageHelper() {
 
 function openMermaidConfig() {
   const mermaidConfigFilePath = path.resolve(
-    utility.extensionConfigDirectoryPath,
+    mume.getExtensionConfigPath(),
     "./mermaid_config.js",
   );
   atom.workspace.open(mermaidConfigFilePath);
@@ -479,7 +512,7 @@ function openMermaidConfig() {
 
 function openMathJaxConfig() {
   const mathjaxConfigFilePath = path.resolve(
-    utility.extensionConfigDirectoryPath,
+    mume.getExtensionConfigPath(),
     "./mathjax_config.js",
   );
   atom.workspace.open(mathjaxConfigFilePath);
@@ -487,7 +520,7 @@ function openMathJaxConfig() {
 
 function openKaTeXConfig() {
   const katexConfigFilePath = path.resolve(
-    utility.extensionConfigDirectoryPath,
+    mume.getExtensionConfigPath(),
     "./katex_config.js",
   );
   atom.workspace.open(katexConfigFilePath);
@@ -495,7 +528,7 @@ function openKaTeXConfig() {
 
 function extendParser() {
   const parserConfigPath = path.resolve(
-    utility.extensionConfigDirectoryPath,
+    mume.getExtensionConfigPath(),
     "./parser.js",
   );
   atom.workspace.open(parserConfigPath);
@@ -549,7 +582,7 @@ function runAllCodeChunks() {
 
 function showUploadedImages() {
   const imageHistoryFilePath = path.resolve(
-    utility.extensionConfigDirectoryPath,
+    mume.getExtensionConfigPath(),
     "./image_history.md",
   );
   atom.workspace.open(imageHistoryFilePath);
@@ -596,9 +629,13 @@ async function onModifySource(
       if (r === result + "\n") {
         return "";
       } // no need to modify output
-      editor
-        .getBuffer()
-        .setTextInRange([[start + 2, 0], [end - 1, 0]], result + "\n");
+      editor.getBuffer().setTextInRange(
+        [
+          [start + 2, 0],
+          [end - 1, 0],
+        ],
+        result + "\n",
+      );
       /*
       editor.edit((edit)=> {
         edit.replace(new vscode.Range(

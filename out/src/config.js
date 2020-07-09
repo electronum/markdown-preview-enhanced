@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MarkdownPreviewEnhancedConfig = void 0;
 const copyValue = (v) => v;
 const parseJsonOrDefault = (def) => (raw) => {
     try {
@@ -16,6 +17,7 @@ const parseListOrDefault = (def) => (raw) => {
         .filter((x) => x.length) || def);
 };
 const ConfigSettings = {
+    configPath: copyValue,
     usePandocParser: copyValue,
     breakOnSingleNewLine: copyValue,
     enableTypographer: copyValue,
@@ -59,15 +61,19 @@ const ConfigSettings = {
     latexEngine: copyValue,
     enableScriptExecution: copyValue,
     singlePreview: copyValue,
-    mathInlineDelimiters: parseJsonOrDefault([["$", "$"], ["\\(", "\\)"]]),
-    mathBlockDelimiters: parseJsonOrDefault([["$$", "$$"], ["\\[", "\\]"]]),
+    mathInlineDelimiters: parseJsonOrDefault([
+        ["$", "$"],
+        ["\\(", "\\)"],
+    ]),
+    mathBlockDelimiters: parseJsonOrDefault([
+        ["$$", "$$"],
+        ["\\[", "\\]"],
+    ]),
     pandocArguments: parseListOrDefault([]),
     fileExtension: parseListOrDefault([".md", ".mmark", ".markdown"]),
+    puppeteerArgs: parseListOrDefault([]),
 };
 class MarkdownPreviewEnhancedConfig {
-    static getCurrentConfig() {
-        return new MarkdownPreviewEnhancedConfig();
-    }
     constructor() {
         for (const name in ConfigSettings) {
             if (ConfigSettings.hasOwnProperty(name)) {
@@ -76,6 +82,9 @@ class MarkdownPreviewEnhancedConfig {
                 this[name] = transform(rawValue);
             }
         }
+    }
+    static getCurrentConfig() {
+        return new MarkdownPreviewEnhancedConfig();
     }
     onDidChange(subscriptions, callback) {
         for (const name in ConfigSettings) {
