@@ -24,6 +24,7 @@ Please visit [this page](https://github.com/sponsors/shd101wyy) to view listed s
 - [Mat Chavez](https://matchavez.com)
 - StammReto
 - SomuahHenry
+- [Youqing](https://github.com/hanyouqing)
 
 ---
 
@@ -55,6 +56,7 @@ Please visit [this page](https://github.com/sponsors/shd101wyy) to view listed s
 - Han Shuo
 - Xinxuan Wang
 - [Wang Lei](https://www.linkedin.com/in/leiwangsg)
+- [libukai](https://markdown.10k.xyz)
 
 ---
 
